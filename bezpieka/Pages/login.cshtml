@@ -1,0 +1,25 @@
+﻿@page
+@model bezpieka.Pages.loginModel
+@{
+    ViewData["Title"] = "Logowanie";
+}
+
+
+<h2>Logowanie</h2>
+
+<form method="post">
+    <div>
+        <label for="username">Nazwa użytkownika:</label>
+        <input type="text" id="username" asp-for="Input.Username" required />
+    </div>
+    <div>
+        <label for="password">Hasło:</label>
+        <input type="password" id="password" asp-for="Input.Password" required />
+    </div>
+    <button type="submit">Zaloguj</button>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <p style="color:red;">@Model.ErrorMessage</p>
+}
