@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bezpieka", "bezpieka.csproj", "{DDDB83A2-D3C3-4F8D-848B-3EA9822D3BCE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PS1CB", "..\PS1CB\PS1CB.csproj", "{093FD042-B0DF-4D89-BE80-6FD59E29D591}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DDDB83A2-D3C3-4F8D-848B-3EA9822D3BCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DDDB83A2-D3C3-4F8D-848B-3EA9822D3BCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DDDB83A2-D3C3-4F8D-848B-3EA9822D3BCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DDDB83A2-D3C3-4F8D-848B-3EA9822D3BCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{093FD042-B0DF-4D89-BE80-6FD59E29D591}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{093FD042-B0DF-4D89-BE80-6FD59E29D591}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{093FD042-B0DF-4D89-BE80-6FD59E29D591}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{093FD042-B0DF-4D89-BE80-6FD59E29D591}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,41 @@
+﻿@model PS1CB.Data.Message
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Message</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Text)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Text)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AuthorName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AuthorName)
+        </dd>
+        <dt class="col-sm-2">
+            Editors:
+        </dt>
+        <dd class="col-sm-10">
+            <ul>
+                @foreach (var editor in Model.Editors)
+                {
+                    <li>@editor.UserId @Html.ActionLink("🗑", "Delete", "Editors", new { id = editor.Id }, new {@class="btn btn-sm btn-danger"})</li>
+                }
+            </ul>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
