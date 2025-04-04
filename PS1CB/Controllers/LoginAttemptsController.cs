@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PS1CB.Data;
+using PS1CB.Models;
 
 namespace PS1CB.Controllers
 {
@@ -21,7 +22,17 @@ namespace PS1CB.Controllers
         // GET: LoginAttempts
         public async Task<IActionResult> Index()
         {
-            return View(await _context.LoginAttempts.ToListAsync());
+            var attempts = await _context.LoginAttempts
+                .GroupBy(x => x.Who)
+                .Select(g => new LoginAttemptModel
+                {
+                    Who = g.Key,
+                    LastSuccessful = g.Where(x => x.Success).OrderByDescending(x => x.When).FirstOrDefault().When,
+                    LastFailed = g.Where(x => !x.Success).OrderByDescending(x => x.When).FirstOrDefault().When,
+                    //liczba nieudanych logowań od ostatniego poprawnego logowania
+                    FailedCount = g.Where(x => !x.Success && x.When > g.Where(x => x.Success).OrderByDescending(x => x.When).FirstOrDefault().When).Count(),
+                }).ToListAsync();
+            return View(attempts);
         }
 
     }

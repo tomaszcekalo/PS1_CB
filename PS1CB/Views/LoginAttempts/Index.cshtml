@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PS1CB.Data.LoginAttempt>
+﻿@model IEnumerable<LoginAttemptModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,13 +12,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.When)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Who)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Success)
+                @Html.DisplayNameFor(model => model.LastSuccessful)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastFailed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FailedCount)
             </th>
             <th></th>
         </tr>
@@ -27,13 +30,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.When)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Who)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Success)
+                @Html.DisplayFor(modelItem => item.LastSuccessful)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastFailed)
+            </td>
+            <td>
+					@Html.DisplayFor(modelItem => item.FailedCount)
             </td>
             <td>
             </td>
