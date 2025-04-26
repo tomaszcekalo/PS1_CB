@@ -20,10 +20,17 @@ namespace PS1CB.Areas.Identity
         {
             var result = await base.CheckPasswordSignInAsync(user, password, lockoutOnFailure);
 
-            if (result == SignInResult.LockedOut)
-                return result;
+            await LockoutFeature(user, result);
 
-            if (result == SignInResult.Failed && lockoutOnFailure)
+            return result;
+        }
+
+        public async Task LockoutFeature(ApplicationUser user, SignInResult result)
+        {
+            if (result == SignInResult.LockedOut)
+                return;
+
+            if (result == SignInResult.Failed )
             {
                 user.LockoutCount++;
                 int lockoutMinutes = 5 * user.LockoutCount; // Increase by 5 mins for each lockout
@@ -33,8 +40,23 @@ namespace PS1CB.Areas.Identity
 
                 await UserManager.UpdateAsync(user);
             }
+        }
+       
+        public async Task<SignInResult> SignInFailedAsync(ApplicationUser user)
+        {
+            var incrementLockoutResult = await UserManager.AccessFailedAsync(user) ?? IdentityResult.Success;
+            if (!incrementLockoutResult.Succeeded)
+            {
+                // Return the same failure we do when resetting the lockout fails after a correct password.
+                await LockoutFeature(user, SignInResult.Failed);
+                return SignInResult.Failed;
+            }
 
-            return result;
+            if (await UserManager.IsLockedOutAsync(user))
+            {
+                return await LockedOut(user);
+            }
+            return SignInResult.NotAllowed;
         }
     }
 

@@ -19,9 +19,16 @@ else
 {
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </li>
+        @* <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/SubPasswordLogin">SubPasswordLogin</a>
+        </li> *@
+        <li class="nav-item">
+            @Html.ActionLink("LoginWithPartialPassword", "LoginWithPartialPassword", "Home",new{}, new { @class = "nav-link text-dark" })
+            @* <a class="nav-link text-dark" asp-page="/Home/LoginWithPartialPassword">SubPasswordLogin</a> *@
+        </li>
 }
 </ul>
