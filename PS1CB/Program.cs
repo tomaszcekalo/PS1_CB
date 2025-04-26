@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using PS1CB.Areas.Identity;
 using PS1CB.Data;
 using PS1CB.Services;
@@ -9,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+
 //builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 //builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //    options.UseSqlServer(connectionString));
@@ -16,6 +19,8 @@ builder.Services.AddSqlite<ApplicationDbContext>(connectionString);
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<ILoginAttemptService, LoginAttemptService>();
 builder.Services.AddScoped<SignInManager<ApplicationUser>, CustomSignInManager>();
+builder.Services.AddScoped<SubPasswordService>();
+
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
@@ -41,7 +46,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
     options.User.RequireUniqueEmail = false;
 })
-    .AddSignInManager()
+    .AddSignInManager<CustomSignInManager>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.ConfigureApplicationCookie(options =>
@@ -62,6 +67,11 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 builder.Services.AddControllersWithViews();
+var contexts= builder.Services.Where(d => d.ServiceType == typeof(IDbContextOptionsConfiguration<ApplicationDbContext>))
+    .ToList();
+
+builder.Services.Remove(contexts.FirstOrDefault());
+
 
 var app = builder.Build();
 
@@ -83,6 +93,13 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+app.MapAreaControllerRoute(
+    name: "Identity",
+    areaName: "Identity",
+    pattern: "Identity/{controller=Home}/{action=Index}"
+);
+
 
 app.MapControllerRoute(
     name: "default",
